@@ -1,14 +1,14 @@
-function find_Number(a,b)
+function find_Number(array_value,count)
 {
 
 
-    if(b=="" || b==0)
+    if(count=="" || count==0)
     {
-        console.log(a[0]);
+        console.log(array_value[0]);
     }
     else
     {
-        console.log(a.slice(0,b));
+        console.log(array_value.slice(0,count));
     }
 }
 
