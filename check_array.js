@@ -1,6 +1,6 @@
-function check_array(a){
+function check_array(array_value){
 
-    console.log(Array.isArray(a));
+    console.log(Array.isArray(array_value));
 }
 
 
