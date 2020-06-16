@@ -1,11 +1,15 @@
-var array = [1, 2, 3, 4, 5];
+function rotate(rotate_array)
+{
+for (let i = 0; i < 3; i++) {
+    let first_element = rotate_array[0];
 
-for (var i = 0; i < 3; i++) {
-    var f = array[0];
-
-    for (var j = 0; j < array.length; j++) {
-        array[j] = array[j + 1];
+    for (var j = 0; j < rotate_array.length; j++) {
+        rotate_array[j] = rotate_array[j + 1];
     }
-    array[array.length - 1] = f;
+    rotate_array[rotate_array.length - 1] = first_element;
 }
-console.log(array);
+return rotate_array;
+}
+let rotate_array = [1, 2, 3, 4, 5];
+const final_array=rotate(rotate_array);
+console.log(final_array);
