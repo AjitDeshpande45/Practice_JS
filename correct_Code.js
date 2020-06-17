@@ -14,7 +14,7 @@ async function calc()
 {
    
    getNumbers(numbers) ;
-    addNumber(3,(numbers)=>{
+    addNumber(3,() =>{
 
         getNumbers(numbers);
     });
