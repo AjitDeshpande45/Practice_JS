@@ -6,7 +6,7 @@ function getNumbers() {
 function addNumber(number,callback) {
  setTimeout(() => {
  numbers.push(number)
- callback(numbers);
+ callback();
  }, 2000)
 }
 
