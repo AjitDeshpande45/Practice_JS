@@ -1,10 +1,13 @@
-function one_Ten() {
-    for (let i = 0; i < 10; i++) {
-        setTimeout(() => {
-            console.log(i);
-        }, i * 1000)
-    }
+let count=0;
+function one_Ten()
+{
+    setTimeout(()=>{
+      console.log(count);
+      count=count+1;
+      if(count < 10)
+      {
+          one_Ten();
+      }
+    },1000)
 }
-
 one_Ten();
-
