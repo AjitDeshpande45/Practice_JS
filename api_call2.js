@@ -1,13 +1,12 @@
 const axios = require('axios');
-var n=[];
-function flatten (jsonobj) {
-    var newjson = {};
-    for (var key in jsonobj) {
+function flatten_Data (jsonobj) {
+    let newjson = {};
+    for (let key in jsonobj) {
       if (typeof jsonobj[key] === 'object' && jsonobj[key] !== null) {
           
       
-        var subkey = flatten(jsonobj[key])
-        for (var key2 in subkey) {
+        let subkey = flatten_Data(jsonobj[key])
+        for (let key2 in subkey) {
             
             newjson[key2] = subkey[key2];
             //console.log(key);
@@ -19,17 +18,16 @@ function flatten (jsonobj) {
     }
     
    // console.log(newjson);
-    n.push(newjson)
    // console.log(n);
     return newjson;
   }
 axios.get('https://api.github.com/gists/public').then(jdata => {
 
     //console.log(jdata.data);
-    for(var i=0;i<2;i++)
+    for(let i=0;i<2;i++)
     {
-        var x2=flatten(jdata.data[i]);
-        console.log(x2);
+        let record=flatten_Data(jdata.data[i]);
+        console.log(record);
     }
     
    
