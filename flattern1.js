@@ -1,13 +1,15 @@
   
 function flatten (jsonobj) {
   var newjson = {};
+ 
   for (var key in jsonobj) {
+    //console.log(typeof(jsonobj[key]));
     if (typeof jsonobj[key] === 'object' && jsonobj[key] !== null) {
     
       var subkey = flatten(jsonobj[key])
       for (var key2 in subkey) {
           
-          newjson[key2] = subkey[key2];
+          newjson[key+"_"+key2] = subkey[key2];
           //console.log(key);
       }
     } else {
@@ -67,4 +69,10 @@ var jsondoc=[
     var final_jason=flatten(jsondoc[i]);
     final_doc.push(final_jason);
   }
-console.log(final_doc);
+function rename(final_doc)
+{
+    
+}
+  rename (final_doc);
+//console.log(final_doc);
+console.log(jsondoc[0]);

@@ -1,24 +1,25 @@
+const numbers = [1, 2];
 function getNumbers() {
-    setTimeout(() => {
-    numbers.forEach  ( number => console.log(number))
- }, 1000)
+  setTimeout(() => {
+    numbers.forEach(number => console.log(number))
+    
+  }, 1000)
 }
-function addNumber(number,callback) {
- setTimeout(() => {
- numbers.push(number)
- callback();
- }, 2000)
-}
+function addNumber(number) {
+    return new Promise((resolve,reject)=>{
+        setTimeout(() => {
+            numbers.push(number)
+            resolve();
+            }, 2000)
 
-async function calc()
-{
-   
-   getNumbers(numbers) ;
-    addNumber(3,() =>{
 
-        getNumbers(numbers);
+
     });
     
+  
 }
-const numbers = [1, 2];
-calc();
+getNumbers(numbers)
+addNumber(3).then(()=>getNumbers(numbers));
+
+    
+

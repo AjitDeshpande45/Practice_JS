@@ -1,4 +1,4 @@
-function Missing_Element(arr1, arr2, l1, l2) {
+/*function Missing_Element(arr1, arr2, l1, l2) {
 
     for (let i = 0; i < l1; i++) {
         var f = 0;
@@ -22,4 +22,11 @@ if (l1 > l2) {
 }
 else {
     Missing_Element(arr2, arr1, l2, l1);
-}
+}*/
+
+let a=[1,2,3,4];
+a=a.sort();
+a=a.toString();
+let b=[1,2,4];
+b=b.sort();
+b=b.toString();

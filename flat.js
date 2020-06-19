@@ -1,69 +1,45 @@
 function flatten (jsonobj) {
-    var newjson = {};
-    for (var key in jsonobj) {
-      if (typeof jsonobj[key] === 'object' && jsonobj[key] !== null) {
-      
-        var subkey = flatten(jsonobj[key])
-        for (var key2 in subkey) {
-            
-            newjson[key2] = subkey[key2];
-            //console.log(key);
-        }
-      } else {
+  var newjson = {};
+  for (var key in jsonobj) {
+    if (typeof jsonobj[key] === 'object' && jsonobj[key] !== null) {
     
-        newjson[key] = jsonobj[key];
+      var subkey = flatten(jsonobj[key])
+      for (var key2 in subkey) {
+          
+          newjson[key2] = subkey[key2];
+          //console.log(key);
       }
+    } else {
+  
+      newjson[key] = jsonobj[key];
     }
-    
-    
-    return newjson;
   }
   
-  var jsondoc=[
-    {
-      "id": 1,
-      "name": "Leanne Graham",
-      "username": "Bret",
-      "email": "Sincere@april.biz",
-      "address": {
-        "street": "Kulas Light",
-        "suite": "Apt. 556",
-        "city": "Gwenborough",
-        "zipcode": "92998-3874",
-        "geo": {
-          "lat": "-37.3159",
-          "lng": "81.1496"
-        }
-      },
-      "phone": "1-770-736-8031 x56442",
-      "website": "hildegard.org",
-      "company": {
-        "name": "Romaguera-Crona",
-        "catchPhrase": "Multi-layered client-server neural-net",
-        "bs": "harness real-time e-markets"
+  
+  return newjson;
+}
+
+var jsondoc=[
+  {
+    "url": "https://api.github.com/gists/455f9dd68c9b77dc84d5e1fd55b97476",
+    "forks_url": "https://api.github.com/gists/455f9dd68c9b77dc84d5e1fd55b97476/forks",
+    "files": {
+      "PY0101EN-3-3-Functions.ipynb": {
+        "filename": "PY0101EN-3-3-Functions.ipynb",
+        "type": "text/plain",
+        "language": "Jupyter Notebook",
+        "raw_url": "https://gist.githubusercontent.com/Shivprasad-Titare/455f9dd68c9b77dc84d5e1fd55b97476/raw/31c8e2c74041ce4bd1663b9086e57e9903378be3/PY0101EN-3-3-Functions.ipynb",
+        "size": 39100
       }
     },
-    {
-      "id": 2,
-      "name": "Ervin Howell",
-      "username": "Antonette",
-      "email": "Shanna@melissa.tv",
-      "address": {
-        "street": "Victor Plains",
-        "suite": "Suite 879",
-        "city": "Wisokyburgh",
-        "zipcode": "90566-7771",
-        "geo": {
-          "lat": "-43.9509",
-          "lng": "-34.4618"
-        }
-      }
-    }
-    ];
-    var final_doc=[];
-    for(var i=0;i<Object.keys(jsondoc).length;i++)
-    {
-      var final_jason=flatten(jsondoc);
-      final_doc.push(final_jason);
-    }
-  console.log(final_doc);
+    "truncated": false
+  }
+ 
+  ];
+  var final_doc=[];
+  for(var i=0;i<Object.keys(jsondoc).length;i++)
+  {
+    var final_jason=flatten(jsondoc[i]);
+    final_doc.push(final_jason);
+  }
+console.log(final_doc);

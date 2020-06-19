@@ -1,0 +1,25 @@
+{
+  "name": "js",
+  "version": "1.0.0",
+  "description": "",
+  "main": "api_call1.js",
+  "dependencies": {
+    "axios": "^0.19.2",
+    "node-fetch": "^2.6.0",
+    "request": "^2.88.2"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AjitDeshpande45/Practice_JS.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/AjitDeshpande45/Practice_JS/issues"
+  },
+  "homepage": "https://github.com/AjitDeshpande45/Practice_JS#readme"
+}
