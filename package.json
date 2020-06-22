@@ -5,8 +5,10 @@
   "main": "api_call1.js",
   "dependencies": {
     "axios": "^0.19.2",
+    "csvjson": "^5.1.0",
     "node-fetch": "^2.6.0",
-    "request": "^2.88.2"
+    "request": "^2.88.2",
+    "underscore": "^1.10.2"
   },
   "devDependencies": {},
   "scripts": {

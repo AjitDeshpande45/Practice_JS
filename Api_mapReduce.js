@@ -54,18 +54,21 @@ async function get_Data(){
   },0)
   let record_umail= flat_jason.reduce((a,ob)=>{   // user_id + email
      
-
-    return ob.username+ob.email;
-  })
+    let user=ob.username;
+    //console.log(user+" "+ob.email);
+    a[user]=ob.email;
+    return a
+  },{})
 
   
-   console.log(record_Org);//Only .Org records
-   console.log(record_userinfo);// //Userinfo
-    console.log(record_Email); // only email email id = Nathan@yesenia.net
-  console.log(record_Summetion); // Summetion of id's
-  console.log(record_umail)// userid+Email
+  //console.log(record_Org);//Only .Org records
+   //console.log(record_userinfo);// //Userinfo
+   // console.log(record_Email); // only email email id = Nathan@yesenia.net
+  //console.log(record_Summetion); // Summetion of id's
+  //console.log(record_umail)// userid+Email
     
 
 
 }
+
 get_Data();
