@@ -1,16 +1,16 @@
 const axios = require('axios');
 const csvjson = require('csvjson')
 const writeFile = require('fs').writeFile;
-let finalData = [];
-let finalData1 = [];
-let finestDataData = []
-let finalJson;
-let finalJson1;
+let userInfo = [];
+let specificUserDetail = [];
+let resultData = []
+let userInfoFields;
+let specificUserFields;
 
 
 // Customized fields for API call 1
-function customField(object) {
-    finalJson = {
+function customUserField(object) {
+    userInfoFields = {
         'Id': object.id,
         'Email': object.email,
         'city': object.address.city,
@@ -23,14 +23,15 @@ function customField(object) {
 
 
     }
-    finalData.push(finalJson)
+    userInfo.push(userInfoFields)
 
 }
 
 // Customized fields for API call 2
-function customField1(object) {
 
-    finalJson1 = {
+function specificField(object) {
+
+    specificUserFields = {
         'postId': object.id,
         'title': object.title,
         'body': object.body
@@ -38,7 +39,7 @@ function customField1(object) {
 
 
     }
-    finalData1.push(finalJson1)
+    specificUserDetail.push(specificUserFields)
 
 }
 
@@ -46,86 +47,89 @@ function customField1(object) {
 // To Create single Object for both the calls
 
 function mergeData(ob1, ob2) {
-    let drecord={
+    let finalRecord = {
         ...ob1,
         ...ob2
     }
-    console.log(drecord)
-    finestDataData.push(drecord)
+    console.log(finalRecord)
+    resultData.push(finalRecord)
 
 }
 
 // To convert object to .csv file
 
-function csvData() {
-    const csvData1 = csvjson.toCSV(finestDataData, {
+function converttoCSV() {
+    const csvData = csvjson.toCSV(resultData, {
         headers: 'key'
     });
-    writeFile('./test-data1.csv', csvData1, (err) => {
-        if (err) {
-            console.log(err);
+    writeFile('./test-data1.csv', csvData, (error) => {
+        if (error) {
+            console.log(error);
         }
         console.log('Success!');
     });
 }
 
 // API call1
-async function getData() {
+
+async function getUsersInfo() {
     try {
-        let x1 = await axios.get('https://jsonplaceholder.typicode.com/users');
+        let urlInfo = await axios.get('https://jsonplaceholder.typicode.com/users');
 
 
-        for (let i = 0; i <Object.keys(x1.data).length; i++) {
+        for (let i = 0; i < Object.keys(urlInfo.data).length; i++) {
 
-            customField(x1.data[i])
+            customUserField(urlInfo.data[i])
 
 
         }
     }
-    catch (err) {
-        console.log(err)
+    catch (error) {
+        console.log(error)
     }
 }
 
 // API call 2
-async function getData1() {
+
+async function getSpecificUsersInfo() {
     try {
 
 
         for (let i = 0; i <= 10; i++) {
-            let s = 'https://jsonplaceholder.typicode.com/posts?userId='
-            s = s + i;
-            let x2 = await axios.get(s)
-            //console.log(x2.data)
-            for (let i = 0; i < Object.keys(x2.data).length; i++) {
+            let urlData = 'https://jsonplaceholder.typicode.com/posts?userId='
+            urlData = urlData + i;
+            let parseData = await axios.get(urlData)
 
-                //console.log(x2.data[i])
-                customField1(x2.data[i])
+            for (let i = 0; i < Object.keys(parseData.data).length; i++) {
+
+
+                specificField(parseData.data[i])
 
             }
         }
-        //console.log(finalData1[99])
+
     }
-    catch (err) {
-        console.log(err)
+    catch (error) {
+        console.log(error)
     }
     dataProcess();
 }
 
 
 // to Process the data which is obtained from API calls
+
 function dataProcess() {
-    for (let i1 = 0; i1 < 10; i1++) {
-        for (let j1 = i1 * 10; j1 < (i1 + 1) * 10; j1++) {
-            mergeData(finalData[i1], finalData1[j1])
+    for (let i = 0; i < 10; i++) {
+        for (let j = i * 10; j < (i + 1) * 10; j++) {
+            mergeData(userInfo[i], specificUserDetail[j])
         }
     }
-    
-    //console.log(fin)
-    csvData()
-   // console.log(finalData1[99])
+
+
+    converttoCSV()
+
 }
 
-getData();
-getData1();
+getUsersInfo();
+getSpecificUsersInfo();
 
