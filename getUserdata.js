@@ -95,7 +95,7 @@ async function getUsersInfo() {
 
         }
 
-        let x = userInfo.map(async obj => {
+        let dataApicall2 = userInfo.map(async obj => {
 
             let apiCall2 = await getinfo(urlPost, obj.id)
 
@@ -103,7 +103,7 @@ async function getUsersInfo() {
 
 
         })
-        const postdata = await Promise.all(x)
+        const postdata = await Promise.all(dataApicall2)
 
         specificField(userInfo, postdata)
 
