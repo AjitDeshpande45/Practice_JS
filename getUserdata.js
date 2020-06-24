@@ -1,14 +1,12 @@
 const axios = require('axios');
 const csvjson = require('csvjson')
-const writeFile = require('fs').writeFile;
+const fs = require('fs')
 let userInfo = [];
-let specificUserDetail = [];
-let resultData = []
 let userInfoFields;
-let specificUserFields;
+let urlPost = 'https://jsonplaceholder.typicode.com/posts'
 
 
-// Customized fields for API call 1
+//-----------------------------------------------------------------------------------------------------------------------
 function customUserField(object) {
     userInfoFields = {
         'Id': object.id,
@@ -26,51 +24,64 @@ function customUserField(object) {
     userInfo.push(userInfoFields)
 
 }
+//---------------------------------------------------------------------------------------------------------
+async function getinfo(s, id) {
+    let parseData = await axios.get(s, {
+        params: {
+            userId: id
+        }
 
-// Customized fields for API call 2
-
-function specificField(object) {
-
-    specificUserFields = {
-        'postId': object.id,
-        'title': object.title,
-        'body': object.body
-
-
-
-    }
-    specificUserDetail.push(specificUserFields)
-
+    })
+    
+    return parseData.data
 }
 
-
-// To Create single Object for both the calls
-
-function mergeData(ob1, ob2) {
-    let finalRecord = {
-        ...ob1,
-        ...ob2
-    }
-    console.log(finalRecord)
-    resultData.push(finalRecord)
-
-}
-
-// To convert object to .csv file
-
-function converttoCSV() {
-    const csvData = csvjson.toCSV(resultData, {
+//-------------------------------------------------------------------------------------------------------------
+function converttoCSV(ob) {
+    const csvData = csvjson.toCSV(ob, {
         headers: 'key'
     });
-    writeFile('./test-data1.csv', csvData, (error) => {
+    fs.appendFile('./test-data1.csv', csvData, (error) => {
         if (error) {
             console.log(error);
         }
-        console.log('Success!');
+        //console.log('Success!');
     });
 }
+//-------------------------------------------------------------------------------------------------------------------
+function specificField(userInfo, postdata) {
 
-// API call1
+
+    let re = userInfo.map((user, i) => {
+        let flatdata = userInfo[i]
+
+        for (let j = 0; j < Object.keys(postdata[0]).length; j++) {
+
+
+            if (flatdata.Id == postdata[0][j].userId) {
+
+                flatdata['title'] = postdata[0][j].title,
+                    flatdata['postid'] = postdata[0][j].id,
+                    flatdata['body'] = postdata[0][j].body
+                console.log(flatdata)
+               
+                let duplicateObject = flatdata
+                converttoCSV(duplicateObject)
+
+
+            }
+            
+        }
+
+        
+    })
+
+
+    //console.log(convertJson)
+    //----------------------------------------------------------------------------------------------------------------------------
+
+
+}
 
 async function getUsersInfo() {
     try {
@@ -83,53 +94,28 @@ async function getUsersInfo() {
 
 
         }
+
+        let x = userInfo.map(async obj => {
+
+            let apiCall2 = await getinfo(urlPost, obj.id)
+
+            return apiCall2
+
+
+        })
+        const postdata = await Promise.all(x)
+
+        specificField(userInfo, postdata)
+
+
     }
+
     catch (error) {
         console.log(error)
     }
+
+
 }
 
-// API call 2
-
-async function getSpecificUsersInfo() {
-    try {
-
-
-        for (let i = 0; i <= 10; i++) {
-            let urlData = 'https://jsonplaceholder.typicode.com/posts?userId='
-            urlData = urlData + i;
-            let parseData = await axios.get(urlData)
-
-            for (let i = 0; i < Object.keys(parseData.data).length; i++) {
-
-
-                specificField(parseData.data[i])
-
-            }
-        }
-
-    }
-    catch (error) {
-        console.log(error)
-    }
-    dataProcess();
-}
-
-
-// to Process the data which is obtained from API calls
-
-function dataProcess() {
-    for (let i = 0; i < 10; i++) {
-        for (let j = i * 10; j < (i + 1) * 10; j++) {
-            mergeData(userInfo[i], specificUserDetail[j])
-        }
-    }
-
-
-    converttoCSV()
-
-}
 
 getUsersInfo();
-getSpecificUsersInfo();
-
